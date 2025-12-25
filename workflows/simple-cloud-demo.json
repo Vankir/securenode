@@ -1,0 +1,184 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "794a8a49-11a4-478e-8524-645e1bd845e5",
+      "name": "▶️ Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 🚀 FULL CYCLE DEMO\n\n1. **Anonymize**: Hide PII before sending to AI.\n2. **Simulate AI**: Pretend ChatGPT processed the data.\n3. **De-anonymize**: Restore real names in the response.\n\n👇 **Check the final output!**",
+        "height": 412,
+        "width": 1152,
+        "color": 6
+      },
+      "id": "95aaf2d8-b56a-4bb4-b0fa-847c4ed5198a",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -704,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "text",
+              "value": "Client John Smith (john@example.com) requests a refund."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4d19b75d-ef01-40ec-913a-59809846bed4",
+      "name": "1. 📝 Input Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.securenode.app/anonymize",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.text }}"
+            },
+            {
+              "name": "license",
+              "value": "securenode2025beta"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "80f224a4-7e43-401e-b1f2-bf3f4ff9849d",
+      "name": "2. 🛡️ Anonymize",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -224,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "ai_response",
+              "value": "=AI Answer: I have processed the refund for {{ $json.text }}. Case Closed."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6a11a2df-942e-4bee-8b7e-e597ef4dbaab",
+      "name": "3. 🤖 Mock AI Response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        0,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.securenode.app/deanonymize",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.ai_response }}"
+            },
+            {
+              "name": "mapping",
+              "value": "={{ $('2. 🛡️ Anonymize').item.json.mapping }}"
+            },
+            {
+              "name": "license",
+              "value": "securenode2025beta"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b82d4a48-f2b8-4776-a865-3dca4f987836",
+      "name": "4. ✅ De-anonymize",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        224,
+        224
+      ]
+    }
+  ],
+  "connections": {
+    "▶️ Start": {
+      "main": [
+        [
+          {
+            "node": "1. 📝 Input Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. 📝 Input Data": {
+      "main": [
+        [
+          {
+            "node": "2. 🛡️ Anonymize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. 🛡️ Anonymize": {
+      "main": [
+        [
+          {
+            "node": "3. 🤖 Mock AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. 🤖 Mock AI Response": {
+      "main": [
+        [
+          {
+            "node": "4. ✅ De-anonymize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c8bacf21421386c7820aaae3efbdf1927b57e11b284519bcd4306bc1f897d5ac"
+  }
+}
