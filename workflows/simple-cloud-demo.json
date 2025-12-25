@@ -2,29 +2,29 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "794a8a49-11a4-478e-8524-645e1bd845e5",
+      "id": "ef60642e-0a8d-477a-932d-c20d5107f98e",
       "name": "▶️ Start",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -672,
-        224
+        -512,
+        96
       ]
     },
     {
       "parameters": {
-        "content": "## 🚀 FULL CYCLE DEMO\n\n1. **Anonymize**: Hide PII before sending to AI.\n2. **Simulate AI**: Pretend ChatGPT processed the data.\n3. **De-anonymize**: Restore real names in the response.\n\n👇 **Check the final output!**",
-        "height": 412,
-        "width": 1152,
+        "content": "## 🚀 FULL CYCLE DEMO\n\n⚠️ **PRIVACY NOTE**: This workflow sends data to a **public demo server**. Please use **fake data** only.\n\n### 🔒 FOR PRODUCTION:\nTo run this **locally & securely** (no data leaves your server), please use our Docker Image.\n👉 **[Get Docker Image (SecureNode.app)](https://securenode.app)**\n\n---\n**How this demo works:**\n1. **Anonymize**: Hide PII before sending to AI.\n2. **Simulate AI**: Pretend ChatGPT processed the data.\n3. **De-anonymize**: Restore real names in the response.",
+        "height": 581,
+        "width": 1216,
         "color": 6
       },
-      "id": "95aaf2d8-b56a-4bb4-b0fa-847c4ed5198a",
+      "id": "c52b4ed4-2fbf-44b8-a47e-6bb1c588fe09",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -704,
-        16
+        -576,
+        -304
       ]
     },
     {
@@ -39,13 +39,13 @@
         },
         "options": {}
       },
-      "id": "4d19b75d-ef01-40ec-913a-59809846bed4",
+      "id": "d0779329-77a3-4b01-b3a9-4fcda9c528af",
       "name": "1. 📝 Input Data",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        -448,
-        224
+        -288,
+        96
       ]
     },
     {
@@ -67,13 +67,13 @@
         },
         "options": {}
       },
-      "id": "80f224a4-7e43-401e-b1f2-bf3f4ff9849d",
+      "id": "dea1e7f6-d119-4274-a8d0-6146656a5b27",
       "name": "2. 🛡️ Anonymize",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -224,
-        224
+        -64,
+        96
       ]
     },
     {
@@ -88,13 +88,13 @@
         },
         "options": {}
       },
-      "id": "6a11a2df-942e-4bee-8b7e-e597ef4dbaab",
+      "id": "a4beb4f5-ade8-4bd7-8465-5460c1eaa7ae",
       "name": "3. 🤖 Mock AI Response",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        0,
-        224
+        160,
+        96
       ]
     },
     {
@@ -120,13 +120,13 @@
         },
         "options": {}
       },
-      "id": "b82d4a48-f2b8-4776-a865-3dca4f987836",
+      "id": "412c3fde-7bf8-4801-8ffd-c51b9569a8ee",
       "name": "4. ✅ De-anonymize",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        224,
-        224
+        384,
+        96
       ]
     }
   ],
@@ -178,7 +178,6 @@
   },
   "pinData": {},
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "c8bacf21421386c7820aaae3efbdf1927b57e11b284519bcd4306bc1f897d5ac"
   }
 }
