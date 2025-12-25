@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  securenode:
+    image: vankir/securenode:latest
+    container_name: securenode
+    restart: always
+    environment:
+      - LICENSE_KEY=securenode2025beta
+    ports:
+      - "5000:5000"
+    networks:
+      - n8n_network
+
+n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - n8n_network
+    depends_on:
+      - securenode
+
+networks:
+  n8n_network:
+    driver: bridge
+
+volumes:
+  n8n_data:
