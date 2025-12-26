@@ -2,29 +2,29 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "ef60642e-0a8d-477a-932d-c20d5107f98e",
+      "id": "92934c20-31ba-4520-8401-0f6751e9649b",
       "name": "▶️ Start",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -512,
-        96
+        -544,
+        32
       ]
     },
     {
       "parameters": {
-        "content": "## 🚀 FULL CYCLE DEMO\n\n⚠️ **PRIVACY NOTE**: This workflow sends data to a **public demo server**. Please use **fake data** only.\n\n### 🔒 FOR PRODUCTION:\nTo run this **locally & securely** (no data leaves your server), please use our Docker Image.\n👉 **[Get Docker Image (SecureNode.app)](https://securenode.app)**\n\n---\n**How this demo works:**\n1. **Anonymize**: Hide PII before sending to AI.\n2. **Simulate AI**: Pretend ChatGPT processed the data.\n3. **De-anonymize**: Restore real names in the response.",
-        "height": 581,
-        "width": 1216,
+        "content": "## 🚀 FULL CYCLE DEMO\n\n1. **Anonymize**: Hide PII before sending to AI.\n2. **Simulate AI**: Pretend ChatGPT processed the data.\n3. **De-anonymize**: Restore real names in the response.\n\n👇 **Check the final output!**",
+        "height": 380,
+        "width": 1152,
         "color": 6
       },
-      "id": "c52b4ed4-2fbf-44b8-a47e-6bb1c588fe09",
+      "id": "a6e8ac29-98eb-4f15-9a40-17cb0a57bec4",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
         -576,
-        -304
+        -176
       ]
     },
     {
@@ -39,19 +39,19 @@
         },
         "options": {}
       },
-      "id": "d0779329-77a3-4b01-b3a9-4fcda9c528af",
+      "id": "41963458-c28c-4b42-8f6f-dd10dba3c84d",
       "name": "1. 📝 Input Data",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        -288,
-        96
+        -320,
+        32
       ]
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.securenode.app/anonymize",
+        "url": "http://host.docker.internal:8000/anonymize",
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
@@ -67,13 +67,13 @@
         },
         "options": {}
       },
-      "id": "dea1e7f6-d119-4274-a8d0-6146656a5b27",
+      "id": "83555c26-cab0-4432-a95f-17100e2eecd8",
       "name": "2. 🛡️ Anonymize",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -64,
-        96
+        -96,
+        32
       ]
     },
     {
@@ -88,19 +88,19 @@
         },
         "options": {}
       },
-      "id": "a4beb4f5-ade8-4bd7-8465-5460c1eaa7ae",
+      "id": "62c67859-5dd9-458d-84ad-fd75f49fb4a3",
       "name": "3. 🤖 Mock AI Response",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        160,
-        96
+        128,
+        32
       ]
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.securenode.app/deanonymize",
+        "url": "http://host.docker.internal:8000/deanonymize",
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
@@ -109,8 +109,8 @@
               "value": "={{ $json.ai_response }}"
             },
             {
-              "name": "mapping",
-              "value": "={{ $('2. 🛡️ Anonymize').item.json.mapping }}"
+              "name": "state",
+              "value": "={{ $json.state }}"
             },
             {
               "name": "license",
@@ -120,13 +120,13 @@
         },
         "options": {}
       },
-      "id": "412c3fde-7bf8-4801-8ffd-c51b9569a8ee",
+      "id": "d9e49433-742e-420a-91ae-3408428fa51d",
       "name": "4. ✅ De-anonymize",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        384,
-        96
+        352,
+        32
       ]
     }
   ],
