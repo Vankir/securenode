@@ -114,7 +114,7 @@ Body JSON:
 ```json
 {
   "text": "Processed <TICKET_1> for <PERSON_1>",
-  "license": "securenode2025beta",
+  "license": "request trial license for free at https://securenode.app or support@securenode.app",
   "state": "{{ $('Previous Node Name').item.json.state }}"
 }
 ```
@@ -135,12 +135,14 @@ SecureNode uses a hybrid engine (NLP Models + Strict Regex) to detect the follow
 | Custom Regex | `<YOUR_TAG>` | Order IDs, SKUs, Internal Codes | ✅ |
 
 ## 📺 Video Tutorial
-Watch the 30-second demo on YouTube
+Watch the 30-second demo on [YouTube](https://youtu.be/3Wkc6_lPpCA?si=KQHABbFvZ5l8Tte_)
 
 <div align="center">
 
 Ready to make your automation secure?
 
-Get Your License Key
+[Get Your License Key](https://securenode.app)
+
+Need help? [Contact support](mailto:support@securenode.app)
 
 </div>
