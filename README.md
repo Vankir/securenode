@@ -69,3 +69,78 @@ services:
       resources:
         limits:
           memory: 1G
+```
+
+### 🔌 API Usage (for n8n HTTP Request)
+To connect SecureNode to n8n, use the HTTP Request node.
+
+Base URL:
+- `http://securenode:5000` (inside Docker network)
+- `http://localhost:5000` (from your host)
+
+Headers:
+- `Content-Type: application/json`
+
+#### Step 1: Anonymize (`POST /anonymize`)
+Detects PII and replaces it with tokens. Returns a state object needed for decryption.
+
+Body JSON:
+```json
+{
+  "text": "Client John asks about ticket TIC-9999",
+  "license": "securenode2025beta",
+  "regex_entities": [
+    { "name": "TICKET", "regex": "TIC-\\d{4}" }
+  ]
+}
+```
+
+Note: `regex_entities` is optional. Use it to redact custom IDs like Order Numbers, SKUs, etc.
+
+Response JSON:
+```json
+{
+  "text": "Client <PERSON_1> asks about ticket <TICKET_1>",
+  "state": { "...": "..." }
+}
+```
+
+⚠️ Save `state`. You need it for deanonymization.
+
+#### Step 2: De-anonymize (`POST /deanonymize`)
+Restores the original data using the state from Step 1.
+
+Body JSON:
+```json
+{
+  "text": "Processed <TICKET_1> for <PERSON_1>",
+  "license": "securenode2025beta",
+  "state": "{{ $('Previous Node Name').item.json.state }}"
+}
+```
+
+## ✨ Supported Entities
+SecureNode uses a hybrid engine (NLP Models + Strict Regex) to detect the following:
+
+| Entity | Tag | Example | Supported? |
+| --- | --- | --- | --- |
+| Person Names | `<PERSON>` | John Smith, Elon Musk | ✅ |
+| Emails | `<EMAIL_ADDRESS>` | john@example.com | ✅ |
+| Phone Numbers | `<PHONE_NUMBER>` | +1-555-010-9999 | ✅ |
+| IBAN / Finance | `<IBAN>` / `<CREDIT_CARD>` | DE89 3704... | ✅ |
+| Locations/Cities | `<LOCATION>` | Berlin, New York | ✅ |
+| Organizations | `<ORGANIZATION>` | Microsoft, OpenAI | ✅ |
+| Dates/Time | `<DATE_TIME>` | 2025-01-01 | ✅ |
+| IP Addresses | `<IP_ADDRESS>` | 192.168.1.1 | ✅ |
+| Custom Regex | `<YOUR_TAG>` | Order IDs, SKUs, Internal Codes | ✅ |
+
+## 📺 Video Tutorial
+Watch the 30-second demo on YouTube
+
+<div align="center">
+
+Ready to make your automation secure?
+
+Get Your License Key
+
+</div>
