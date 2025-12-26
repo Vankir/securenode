@@ -17,7 +17,7 @@
 
 **GDPR-compliant middleware that sanitizes PII locally _before_ sending data to OpenAI, Anthropic, or DeepSeek.**
 
-[ **Get Docker Image** ](https://securenode.app) | [ **Try Cloud Demo** ](#-try-it-instantly-cloud-demo) | [ **Documentation** ](#-installation)
+[ **Get Docker Image** ](https://securenode.app) | [ **Try Cloud Demo** ](#-try-it-instantly-cloud-demo) | [ **API Docs** ](#-api-usage-for-n8n-http-request)
 
 </div>
 
@@ -33,10 +33,10 @@ Sending raw client data (Names, Emails, IBANs) to public LLMs is a privacy risk 
 ## ✅ The Solution: "The Sandwich Method"
 SecureNode acts as a local reversible proxy. No personal data leaves your infrastructure.
 
-1.  **⬇️ Input:** `Client John Doe asks for a refund.`
-2.  **🛡️ Anonymize (Local):** `Client <PERSON_1> asks for a refund.` (Sent to AI)
-3.  **🤖 AI Processing:** `Approve refund for <PERSON_1>.`
-4.  **✅ De-anonymize (Local):** `Approve refund for John Doe.`
+1.  **⬇️ Input:** `Client John Doe asks for a refund on order TIC-9999.`
+2.  **🛡️ Anonymize (Local):** `Client <PERSON_1> asks for a refund on order <TICKET_1>.` (Sent to AI)
+3.  **🤖 AI Processing:** `Approve refund for <TICKET_1>.`
+4.  **✅ De-anonymize (Local):** `Approve refund for TIC-9999.`
 
 ---
 
@@ -45,16 +45,16 @@ You don't need to install anything to test the logic. We hosted a public endpoin
 
 > **⚠️ Warning:** This demo runs on our public server. Do not send real sensitive PII. For production, use the Docker version below.
 
-1.  **[Click here to view the Workflow JSON](workflows/cloud-demo.json)**
+1.  **[Click here to view the Workflow JSON](workflows/simple-cloud-demo.json)**
 2.  Copy the code (`Ctrl+A` -> `Ctrl+C`).
 3.  Paste it into your n8n editor (`Ctrl+V`).
 
 ---
 
 ## 🐳 Installation (Production)
-For full privacy, run SecureNode locally alongside your n8n instance.
+For full privacy, run SecureNode locally alongside your n8n instance using Docker.
 
-### 1. Docker Compose
+### Docker Compose
 Add this service to your `docker-compose.yml`:
 
 ```yaml
@@ -63,7 +63,9 @@ services:
     image: vankir/securenode:latest
     container_name: securenode
     restart: always
-    environment:
-      - LICENSE_KEY=BETA-2025  # Free Beta Key
     ports:
       - "5000:5000"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
