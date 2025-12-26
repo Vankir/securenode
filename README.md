@@ -88,7 +88,7 @@ Body JSON:
 ```json
 {
   "text": "Client John asks about ticket TIC-9999",
-  "license": "securenode2025beta",
+  "license": "request trial license for free at https://securenode.app or support@securenode.app",
   "regex_entities": [
     { "name": "TICKET", "regex": "TIC-\\d{4}" }
   ]
