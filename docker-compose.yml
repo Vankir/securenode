@@ -6,7 +6,7 @@ services:
     container_name: securenode
     restart: unless-stopped
     ports:
-      - "5000:5000"
+      - "5005:5005"
     deploy:
       resources:
         limits:

@@ -64,7 +64,7 @@ services:
     container_name: securenode
     restart: always
     ports:
-      - "5000:5000"
+      - "5005:5005"
     deploy:
       resources:
         limits:
@@ -75,8 +75,8 @@ services:
 To connect SecureNode to n8n, use the HTTP Request node.
 
 Base URL:
-- `http://securenode:5000` (inside Docker network)
-- `http://localhost:5000` (from your host)
+- `http://securenode:5005` (inside Docker network)
+- `http://localhost:5005` (from your host)
 
 Headers:
 - `Content-Type: application/json`
