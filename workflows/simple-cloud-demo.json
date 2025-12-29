@@ -2,13 +2,13 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "92934c20-31ba-4520-8401-0f6751e9649b",
+      "id": "4f8b989e-b303-4889-a957-d8ede2e981e0",
       "name": "▶️ Start",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -544,
-        32
+        -496,
+        64
       ]
     },
     {
@@ -18,13 +18,13 @@
         "width": 1152,
         "color": 6
       },
-      "id": "a6e8ac29-98eb-4f15-9a40-17cb0a57bec4",
+      "id": "9742bb6b-059b-434b-8ad6-af889c20a8f7",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -576,
-        -176
+        -528,
+        -144
       ]
     },
     {
@@ -39,41 +39,37 @@
         },
         "options": {}
       },
-      "id": "41963458-c28c-4b42-8f6f-dd10dba3c84d",
+      "id": "b9965ae6-264d-4d4e-aabf-85c6ab026fcd",
       "name": "1. 📝 Input Data",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        -320,
-        32
+        -272,
+        64
       ]
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "http://host.docker.internal:8000/anonymize",
+        "url": "https://api.securenode.app/anonymize",
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
             {
               "name": "text",
               "value": "={{ $json.text }}"
-            },
-            {
-              "name": "license",
-              "value": "securenode2025beta"
             }
           ]
         },
         "options": {}
       },
-      "id": "83555c26-cab0-4432-a95f-17100e2eecd8",
+      "id": "13471ff3-0fac-44f2-b7a4-93a9d833c9ad",
       "name": "2. 🛡️ Anonymize",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -96,
-        32
+        -48,
+        64
       ]
     },
     {
@@ -88,19 +84,19 @@
         },
         "options": {}
       },
-      "id": "62c67859-5dd9-458d-84ad-fd75f49fb4a3",
+      "id": "fd4874f9-d1b7-4c46-a6b9-a50a90502c63",
       "name": "3. 🤖 Mock AI Response",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        128,
-        32
+        176,
+        64
       ]
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "http://host.docker.internal:8000/deanonymize",
+        "url": "https://api.securenode.app/deanonymize",
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
@@ -111,22 +107,18 @@
             {
               "name": "state",
               "value": "={{ $json.state }}"
-            },
-            {
-              "name": "license",
-              "value": "securenode2025beta"
             }
           ]
         },
         "options": {}
       },
-      "id": "d9e49433-742e-420a-91ae-3408428fa51d",
+      "id": "3be60ae8-c13f-4eb2-8189-99a3f00da9d9",
       "name": "4. ✅ De-anonymize",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        352,
-        32
+        400,
+        64
       ]
     }
   ],
