@@ -62,14 +62,65 @@ services:
   securenode:
     image: vankir/securenode:latest
     container_name: securenode
-    restart: always
+    restart: unless-stopped
     ports:
       - "5005:5005"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:5005/health', timeout=2).read()\""
+      interval: 30s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
     deploy:
       resources:
         limits:
           memory: 1G
 ```
+
+### Higher accuracy (large NLP models)
+For higher PII detection accuracy you can start SecureNode with large NLP models enabled.
+
+Note: the first start takes longer because the container downloads the models on startup.
+
+Example:
+
+```yaml
+services:
+  securenode:
+    environment:
+      - MODELS=en:en_core_web_lg,de:de_core_news_lg
+```
+
+### Start
+Run:
+
+```bash
+docker compose up -d
+```
+
+Open n8n:
+- `http://localhost:5678`
+
+Import the demo workflow (Docker):
+
+1.  **[Open the Workflow JSON](workflows/simple-docker-demo.json)**
+2.  Copy the code (`Ctrl+A` -> `Ctrl+C`).
+3.  Paste it into your n8n editor (`Ctrl+V`).
+
+### 🔑 License
+SecureNode accepts the license in either of these ways:
+
+- **Environment variable (recommended for production)**: set `LICENSE_KEY` on the container.
+- **Request field (convenient for n8n)**: include `license` in the JSON body.
+
+The license is optional. If you omit it, SecureNode will run with the free version limitations.
+
+If both are provided, the request `license` can be used (e.g. to override).
+
+### ❤️ Health
+Use `GET /health` to verify the service is ready.
 
 ### 🔌 API Usage (for n8n HTTP Request)
 To connect SecureNode to n8n, use the HTTP Request node.
@@ -88,12 +139,14 @@ Body JSON:
 ```json
 {
   "text": "Client John asks about ticket TIC-9999",
-  "license": "request trial license for free at https://securenode.app or support@securenode.app",
+  "license": "YOUR_LICENSE_KEY",
   "regex_entities": [
     { "name": "TICKET", "regex": "TIC-\\d{4}" }
   ]
 }
 ```
+
+`license` is optional. If you set `LICENSE_KEY` as an environment variable for the container, you can also omit `license` from the request body.
 
 Note: `regex_entities` is optional. Use it to redact custom IDs like Order Numbers, SKUs, etc.
 
@@ -114,7 +167,7 @@ Body JSON:
 ```json
 {
   "text": "Processed <TICKET_1> for <PERSON_1>",
-  "license": "request trial license for free at https://securenode.app or support@securenode.app",
+  "license": "YOUR_LICENSE_KEY",
   "state": "{{ $('Previous Node Name').item.json.state }}"
 }
 ```

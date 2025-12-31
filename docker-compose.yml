@@ -7,11 +7,15 @@ services:
     restart: unless-stopped
     ports:
       - "5005:5005"
+    networks:
+      - n8n_network
+#    environment:
+#      - MODELS=${MODELS:-en:en_core_web_lg,de:de_core_news_lg}
     healthcheck:
       test:
         - CMD-SHELL
-        - "python -c \"import socket; s=socket.socket(); s.settimeout(2); s.connect(('127.0.0.1', 5005)); s.close()\""
-      interval: 10s
+        - "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:5005/health', timeout=2).read()\""
+      interval: 30s
       timeout: 3s
       retries: 5
       start_period: 20s
@@ -19,3 +23,28 @@ services:
       resources:
         limits:
           memory: 1G
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - n8n_network
+    depends_on:
+      - securenode
+
+networks:
+  n8n_network:
+    driver: bridge
+
+volumes:
+  n8n_data:

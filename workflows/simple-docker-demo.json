@@ -1,0 +1,175 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "020ec92d-14a6-4cb9-8e08-32d62e43786d",
+      "name": "▶️ Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        -384
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 🚀 FULL CYCLE DEMO\n\n1. **Anonymize**: Hide PII before sending to AI.\n2. **Simulate AI**: Pretend ChatGPT processed the data.\n3. **De-anonymize**: Restore real names in the response.\n\n👇 **Check the final output!**",
+        "height": 380,
+        "width": 1152,
+        "color": 6
+      },
+      "id": "153144a7-4b59-412f-81af-331e7f9d871e",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        -592
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "text",
+              "value": "Client John Smith (john@example.com) requests a refund."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "af7aed77-bd94-41b1-9da5-76513cff3d76",
+      "name": "1. 📝 Input Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        -272,
+        -384
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://securenode:5005/anonymize",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e27d9fd0-f8c7-4cfe-8bd9-906b8a0c5e12",
+      "name": "2. 🛡️ Anonymize",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -48,
+        -384
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "ai_response",
+              "value": "=AI Answer: I have processed the refund for {{ $json.text }}. Case Closed."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e47e7cbb-b9d8-48b6-8f18-0a8ab7dee51e",
+      "name": "3. 🤖 Mock AI Response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        176,
+        -384
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://securenode:5005/deanonymize",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.ai_response }}"
+            },
+            {
+              "name": "state",
+              "value": "={{ $json.state }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "593f4058-4b20-4364-aa88-93603ffc7d71",
+      "name": "4. ✅ De-anonymize",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        400,
+        -384
+      ]
+    }
+  ],
+  "connections": {
+    "▶️ Start": {
+      "main": [
+        [
+          {
+            "node": "1. 📝 Input Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. 📝 Input Data": {
+      "main": [
+        [
+          {
+            "node": "2. 🛡️ Anonymize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. 🛡️ Anonymize": {
+      "main": [
+        [
+          {
+            "node": "3. 🤖 Mock AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. 🤖 Mock AI Response": {
+      "main": [
+        [
+          {
+            "node": "4. ✅ De-anonymize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "fea3734c55f42d099216ec68eb706f979586f375176255d379ae59b7ceb59c94"
+  }
+}
