@@ -38,6 +38,9 @@ SecureNode acts as a local reversible proxy. No personal data leaves your infras
 3.  **🤖 AI Processing:** `Approve refund for <TICKET_1>.`
 4.  **✅ De-anonymize (Local):** `Approve refund for TIC-9999.`
 
+
+![detailed-demo](./images/securenode-detailed-demo.png)
+
 ---
 
 ## 🚀 Try it Instantly (Cloud Demo)
