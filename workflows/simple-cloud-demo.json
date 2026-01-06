@@ -2,29 +2,29 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "4f8b989e-b303-4889-a957-d8ede2e981e0",
+      "id": "dbce8e2b-7dda-4149-accf-ad9fafd1d6c4",
       "name": "▶️ Start",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -496,
-        64
+        -304,
+        368
       ]
     },
     {
       "parameters": {
-        "content": "## 🚀 FULL CYCLE DEMO\n\n1. **Anonymize**: Hide PII before sending to AI.\n2. **Simulate AI**: Pretend ChatGPT processed the data.\n3. **De-anonymize**: Restore real names in the response.\n\n👇 **Check the final output!**",
-        "height": 380,
-        "width": 1152,
+        "content": "## 🚀 FULL CYCLE DEMO (for production use Docker from https://securenode.app )\n\n1. **Anonymize**: Hide PII before sending to AI.\n2. **Simulate AI**: Pretend ChatGPT processed the data.\n3. **De-anonymize**: Restore real names in the response.\n\n👇 **Check the final output!**",
+        "height": 540,
+        "width": 1680,
         "color": 6
       },
-      "id": "9742bb6b-059b-434b-8ad6-af889c20a8f7",
+      "id": "915eb2b7-090c-4088-8203-b7dc1032bfb1",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -528,
-        -144
+        -368,
+        112
       ]
     },
     {
@@ -39,13 +39,13 @@
         },
         "options": {}
       },
-      "id": "b9965ae6-264d-4d4e-aabf-85c6ab026fcd",
+      "id": "f7dfb853-be54-4d50-817c-1767bbfddaa8",
       "name": "1. 📝 Input Data",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        -272,
-        64
+        -96,
+        368
       ]
     },
     {
@@ -63,13 +63,13 @@
         },
         "options": {}
       },
-      "id": "13471ff3-0fac-44f2-b7a4-93a9d833c9ad",
+      "id": "bcc10467-650e-4f96-ad45-cd42a30ac9ff",
       "name": "2. 🛡️ Anonymize",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -48,
-        64
+        256,
+        368
       ]
     },
     {
@@ -84,13 +84,13 @@
         },
         "options": {}
       },
-      "id": "fd4874f9-d1b7-4c46-a6b9-a50a90502c63",
+      "id": "804a8bd7-f3b1-42ae-a2e4-b83365bb8bf2",
       "name": "3. 🤖 Mock AI Response",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        176,
-        64
+        576,
+        368
       ]
     },
     {
@@ -112,14 +112,83 @@
         },
         "options": {}
       },
-      "id": "3be60ae8-c13f-4eb2-8189-99a3f00da9d9",
+      "id": "78f90030-219f-44bf-b943-b7c8f88559c6",
       "name": "4. ✅ De-anonymize",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        400,
-        64
+        944,
+        368
       ]
+    },
+    {
+      "parameters": {
+        "content": "### Input Data\nClient John Smith (john@example.comå) requests a refund.",
+        "width": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        48,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "2b82769e-da6c-4f16-8cb6-ecb71726b0fc",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "### Anonymized Data\nClient <PERSON_1> (<EMAIL_ADDRESS_1>) requests a refund.",
+        "width": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        368,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "f15a65fb-eded-4cf8-af78-09192d914e9f",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "### Response from AI\nAI Answer: I have processed the refund for Client <PERSON_1> (<EMAIL_ADDRESS_1>) requests a refund.. Case Closed."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        688,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "8202afb8-1703-4fdc-83b3-fd2713cb4b2d",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "### De-anonymized Data\nAI Answer: I have processed the refund for Client John Smith (john@example.com) requests a refund.. Case Closed."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1056,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "016c2cc4-fd61-4d09-b690-266958de9a0a",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "### Local data map\n\"<PERSON_1>\":  \"John Smith\",\n  \"<EMAIL_ADDRESS_1>\": \"john@example.com\"",
+        "height": 112,
+        "width": 864
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        224,
+        528
+      ],
+      "typeVersion": 1,
+      "id": "e9e319ae-6b80-4751-82de-fb43e247f1d1",
+      "name": "Sticky Note5"
     }
   ],
   "connections": {
