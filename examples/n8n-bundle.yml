@@ -5,8 +5,6 @@ services:
     image: vankir/securenode:latest
     container_name: securenode
     restart: always
-    environment:
-      - LICENSE_KEY=securenode2025beta
     ports:
       - "5005:5005"
     networks:
